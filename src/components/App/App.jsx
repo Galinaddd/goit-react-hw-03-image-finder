@@ -5,25 +5,8 @@ import { Component } from 'react';
 import { InfinitySpin } from 'react-loader-spinner';
 import { getImges } from '../../api';
 import css from './App.module.css';
-import { ToastContainer, toast } from 'react-toastify';
-import { ErrorMessage } from 'components/ErrorMessage/ErrorMessage';
 
-<ToastContainer
-  position="top-right"
-  autoClose={5000}
-  hideProgressBar={false}
-  newestOnTop={false}
-  closeOnClick
-  rtl={false}
-  pauseOnFocusLoss
-  draggable
-  pauseOnHover
-  theme="light"
-/>;
-{
-  /* Same as */
-}
-<ToastContainer />;
+import { ErrorMessage } from 'components/ErrorMessage/ErrorMessage';
 
 export class App extends Component {
   state = {
