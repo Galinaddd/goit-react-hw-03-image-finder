@@ -1,13 +1,40 @@
 import css from './ImageGalleryItem.module.css';
-export const ImageGalleryItem = ({ imageItem }) => {
-  // console.log(imageItem.webformatURL);
-  return (
-    <li className={css.ImageGalleryItem}>
-      <img
-        src={imageItem.webformatURL}
-        alt=""
-        className={css.ImageGalleryItemImage}
-      />
-    </li>
-  );
-};
+import { Modal } from '../Modal/Modal';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
+
+export class ImageGalleryItem extends Component {
+  static propTypes = {
+    imageItem: PropTypes.shape({
+      id: PropTypes.number,
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+    }),
+  };
+
+  state = { isModalOpen: false };
+
+  toogleModal = () => {
+    this.setState(prevState => ({ isModalOpen: !prevState.isModalOpen }));
+  };
+
+  render() {
+    const { webformatURL, tags, largeImageURL } = this.props.imageItem;
+
+    return (
+      <li className={css.ImageGalleryItem} onClick={this.toogleModal}>
+        <img
+          src={webformatURL}
+          alt={tags}
+          className={css.ImageGalleryItemImage}
+        />
+        {this.state.isModalOpen && (
+          <Modal onCloseModal={this.toogleModal}>
+            <img src={largeImageURL} alt={tags} />
+          </Modal>
+        )}
+      </li>
+    );
+  }
+}

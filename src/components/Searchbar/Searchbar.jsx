@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import css from './Searchbar.module.css';
+import { CgSearch } from 'react-icons/cg';
 
 export class SerchBar extends Component {
   state = {
@@ -7,8 +8,7 @@ export class SerchBar extends Component {
   };
 
   handleOnChange = evt => {
-    console.log('event onchange', evt.currentTarget.value);
-    this.setState({ serchQuery: evt.currentTarget.value });
+        this.setState({ serchQuery: evt.currentTarget.value });
   };
 
   handleSubmit = evt => {
@@ -17,12 +17,13 @@ export class SerchBar extends Component {
   };
 
   render() {
-    // console.log(css.Searchbar);
+   
     return (
       <header className={css.Searchbar}>
         <form className={css.SearchForm} onSubmit={this.handleSubmit}>
           <button type="submit" className={css.SearchFormButton}>
-            <span className={css.SearchFormButtonLabel}>fgndgfndfgn</span>
+            <span className={css.SearchFormButtonLabel}></span>
+            <CgSearch />
           </button>
 
           <input
