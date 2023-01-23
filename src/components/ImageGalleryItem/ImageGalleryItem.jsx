@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 export class ImageGalleryItem extends Component {
   static propTypes = {
     imageItem: PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.number.isRequired,
       webformatURL: PropTypes.string.isRequired,
       largeImageURL: PropTypes.string.isRequired,
       tags: PropTypes.string.isRequired,

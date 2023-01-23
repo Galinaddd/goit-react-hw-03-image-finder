@@ -11,7 +11,6 @@ import { ErrorMessage } from 'components/ErrorMessage/ErrorMessage';
 export class App extends Component {
   state = {
     page: 1,
-    per_page: 100,
     keyWord: '',
     images: [],
     isLoading: false,
@@ -19,29 +18,19 @@ export class App extends Component {
   };
 
   getKeyWord = q => {
-    this.setState({ keyWord: q });
+    this.setState({ keyWord: q, page: 1, images: [], error: null });
   };
 
   componentDidUpdate = async (_, prevState) => {
-    const { keyWord, page, per_page } = this.state;
+    const { keyWord, page } = this.state;
 
-    if (prevState.keyWord !== keyWord) {
-      this.setState({ page: 1 });
-    }
     if (prevState.page !== page || prevState.keyWord !== keyWord) {
-      if (prevState.keyWord !== keyWord) {
-        this.setState({ page: 1, images: [], error: null });
-      }
-
       try {
-        this.setState({ isLoading: true, isAmpty: false });
-        const fetchImages = await getImges(keyWord, page, per_page);
+        this.setState({ isLoading: true });
+        const fetchImages = await getImges(keyWord, page);
         this.setState(prevState => ({
           images: [...prevState.images, ...fetchImages.hits],
         }));
-        if (fetchImages.hits.length === 0) {
-          this.setState({ isAmpty: true });
-        }
       } catch (error) {
         this.setState({ error: 'Something was happened, try again' });
       } finally {
@@ -57,13 +46,17 @@ export class App extends Component {
   };
 
   render() {
-    const { images, page, per_page, isLoading, error, keyWord } = this.state;
-    const totalHits = page * per_page;
+    const { images, page, isLoading, error, keyWord } = this.state;
+    const totalHits = page * 12;
 
     return (
       <div className={css.App}>
         <SerchBar onSubmit={this.getKeyWord} />
-        {isLoading && <InfinitySpin width="200" color="#3f51b5" />}
+        {isLoading && (
+          <div className={css.Loader}>
+            <InfinitySpin width="200" color="#3f51b5" />
+          </div>
+        )}
         {images.length > 0 && <ImageGallery images={images} />}
         {error && <ErrorMessage>{error}</ErrorMessage>}
 
@@ -71,7 +64,7 @@ export class App extends Component {
           <ErrorMessage>Nothing was found by your request</ErrorMessage>
         )}
 
-        {images.length > 0 && totalHits <= 500 - per_page && (
+        {images.length > 11 && totalHits <= 488 && (
           <Button onButtonClick={this.loadMore}>Load more</Button>
         )}
       </div>

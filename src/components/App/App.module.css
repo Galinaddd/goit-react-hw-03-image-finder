@@ -4,3 +4,9 @@
   grid-gap: 16px;
   padding-bottom: 24px;
 }
+
+.Loader {
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}

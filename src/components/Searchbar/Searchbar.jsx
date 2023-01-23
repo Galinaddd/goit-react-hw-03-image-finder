@@ -1,14 +1,19 @@
 import { Component } from 'react';
 import css from './Searchbar.module.css';
 import { CgSearch } from 'react-icons/cg';
+import PropTypes from 'prop-types';
 
 export class SerchBar extends Component {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+      };
+
   state = {
     serchQuery: '',
   };
 
   handleOnChange = evt => {
-        this.setState({ serchQuery: evt.currentTarget.value });
+    this.setState({ serchQuery: evt.currentTarget.value });
   };
 
   handleSubmit = evt => {
@@ -17,7 +22,6 @@ export class SerchBar extends Component {
   };
 
   render() {
-   
     return (
       <header className={css.Searchbar}>
         <form className={css.SearchForm} onSubmit={this.handleSubmit}>
