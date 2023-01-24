@@ -18,7 +18,7 @@ export class App extends Component {
   };
 
   getKeyWord = q => {
-    this.setState({ keyWord: q, page: 1, images: [], error: null });
+    this.setState({ keyWord: q.trim(), page: 1, images: [], error: null });
   };
 
   componentDidUpdate = async (_, prevState) => {
@@ -57,14 +57,15 @@ export class App extends Component {
             <InfinitySpin width="200" color="#3f51b5" />
           </div>
         )}
-        {images.length > 0 && <ImageGallery images={images} />}
+        {images.length > 0 && keyWord && <ImageGallery images={images} />}
         {error && <ErrorMessage>{error}</ErrorMessage>}
 
         {keyWord && images.length === 0 && !isLoading && (
           <ErrorMessage>Nothing was found by your request</ErrorMessage>
         )}
+        {!keyWord && <ErrorMessage>Enter keyword to search</ErrorMessage>}
 
-        {images.length > 11 && totalHits <= 488 && (
+        {images.length > 11 && totalHits <= 488 && keyWord && (
           <Button onButtonClick={this.loadMore}>Load more</Button>
         )}
       </div>
