@@ -24,7 +24,7 @@ export class App extends Component {
   componentDidUpdate = async (_, prevState) => {
     const { keyWord, page } = this.state;
 
-    if (prevState.page !== page || prevState.keyWord !== keyWord) {
+    if (prevState.page !== page || (prevState.keyWord !== keyWord && keyWord)) {
       try {
         this.setState({ isLoading: true });
         const fetchImages = await getImges(keyWord, page);
